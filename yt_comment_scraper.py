@@ -12,7 +12,6 @@ def ScrapComment(url):
     option.add_argument("--headless")
     driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=option)
     driver.get(url)
-    time.sleep(5)
     prev_h = 0
     while True:
         height = driver.execute_script("""
@@ -26,7 +25,8 @@ def ScrapComment(url):
                 return getActualHeight();
             """)
         driver.execute_script(f"window.scrollTo({prev_h},{prev_h + 200})")
-        time.sleep(5)
+        # fix the time sleep value according to your network connection
+        time.sleep(1)
         prev_h +=200  
         if prev_h >= height:
             break
@@ -42,9 +42,8 @@ def ScrapComment(url):
 if __name__ == "__main__":
 
     urls = [
+        "https://www.youtube.com/watch?v=cgNQgcUgq0U",
+        "https://www.youtube.com/watch?v=MkE_EwO76b0",
         'https://www.youtube.com/watch?v=XVv6mJpFOb0',
-        'https://www.youtube.com/watch?v=cgNQgcUgq0U&t=4s',
-        'https://www.youtube.com/watch?v=cgNQgcUgq0U&t=4s',
-        'https://www.youtube.com/watch?v=cgNQgcUgq0U&t=4s',
     ]
     ScrapComment(urls[0])
